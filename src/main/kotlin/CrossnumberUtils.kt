@@ -1,4 +1,6 @@
 import kotlin.math.pow
+import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 fun Int.getDigits() = toString().toCharArray().map { it.toString() }
 
@@ -9,6 +11,15 @@ fun Int.pow(pow: Int) = toDouble().pow(pow).toInt()
 fun Int.getDigitsPaddedWithZeros(length: Int): List<String> {
     val str = toString().padStart(length, '0')
     return str.toCharArray().map { it.toString() }
+}
+
+fun Int.isSquare(): Boolean
+{
+    val root = sqrt(this.toDouble())
+
+    val int = root.roundToInt()
+
+    return int.pow(2) == this
 }
 
 /**
