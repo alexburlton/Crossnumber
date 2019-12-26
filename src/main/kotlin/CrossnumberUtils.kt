@@ -14,6 +14,58 @@ fun Int.getDigitsPaddedWithZeros(length: Int): List<String> {
     return str.toCharArray().map { it.toString() }
 }
 
+fun Int.primeFactorise(): List<Int>
+{
+    val factors = mutableListOf<Int>()
+
+    val primes = getPrimesUpTo(this)
+    var remaining = this
+    primes.forEach {
+        while (remaining % it == 0) {
+            remaining /= it
+            factors.add(it)
+        }
+    }
+
+    return factors.toList()
+}
+
+/**
+ * Use the Euclidean algorithm to compute GCD / HCF
+ */
+fun gcd(x: Int, y: Int): Int
+{
+    if (x == y) return x
+
+    var max = maxOf(x, y)
+    var min = minOf(x, y)
+
+    while (max % min != 0) {
+        val newMin = max % min
+        max = min
+        min = newMin
+    }
+
+    return min
+}
+
+fun lcm(x: Int, y: Int): Int
+{
+    val xFactors = x.primeFactorise()
+    val yFactors = y.primeFactorise()
+
+    val allPrimesPresent = xFactors.union(yFactors)
+
+    var lcm = 1
+    allPrimesPresent.forEach { prime ->
+        val maxCount = maxOf(xFactors.count { it == prime }, yFactors.count { it == prime })
+
+        lcm *= prime.pow(maxCount)
+    }
+
+    return lcm
+}
+
 fun Int.isSquare(): Boolean
 {
     if (this <= 0) {
@@ -21,13 +73,21 @@ fun Int.isSquare(): Boolean
     }
 
     val root = sqrt(this.toDouble())
-
     val int = root.roundToInt()
-
     return int.pow(2) == this
 }
 
 fun Double.isInt() = roundToInt().toDouble() == this
+
+fun getPrimesUpTo(limit: Int): List<Int> = (2..limit).toList().filter { it.isPrime() }
+
+fun Int.isPrime(): Boolean {
+    if (this == 2) return true
+    if (this % 2 == 0) return false
+
+    val range = 3..(this/2) step 2
+    return range.all { this % it != 0 }
+}
 
 
 

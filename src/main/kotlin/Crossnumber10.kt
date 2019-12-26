@@ -1,12 +1,32 @@
 import kotlin.math.sqrt
 
 fun main() {
-    val possibilities = Crossnumber10.D6()
-    println(possibilities)
+    Crossnumber10.lcmHcfThing()
 }
 
 object Crossnumber10
 {
+    fun lcmHcfThing() {
+        val possibilities = getAllPossibilities("XX")
+
+        possibilities.forEach { x ->
+            possibilities.filter { it > x }.forEach { y ->
+                val lcm = lcm(x, y)
+                val gcd = gcd(x, y)
+
+                if (lcm.digitCount() == 2
+                    && gcd.digitCount() == 2
+                    && lcm != x
+                    && lcm != y
+                    && gcd != x
+                    && gcd != y)
+                {
+                    println("$x, $y: GCD $gcd, LCM $lcm")
+                }
+            }
+        }
+    }
+
     fun A1(): List<Int> {
         val initialOptions = getAllPossibilities("XXXXX")
         val possibilities = mutableListOf<Int>()
