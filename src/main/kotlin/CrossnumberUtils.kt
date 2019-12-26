@@ -3,6 +3,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 fun Int.getDigits() = toString().toCharArray().map { it.toString() }
+fun Int.digitCount() = getDigits().size
 
 fun Int.isAnagram(other: Int) = getDigits().sorted() == other.getDigits().sorted()
 
@@ -15,12 +16,20 @@ fun Int.getDigitsPaddedWithZeros(length: Int): List<String> {
 
 fun Int.isSquare(): Boolean
 {
+    if (this <= 0) {
+        return false
+    }
+
     val root = sqrt(this.toDouble())
 
     val int = root.roundToInt()
 
     return int.pow(2) == this
 }
+
+fun Double.isInt() = roundToInt().toDouble() == this
+
+
 
 /**
  * Takes a template - e.g. 5XX6X - and returns a list of all possibilities
