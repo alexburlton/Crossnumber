@@ -8,8 +8,9 @@ fun Int.digitSum() = getDigits().map { it.toInt() }.sum()
 fun Int.reversed() = toString().reversed().toInt()
 fun Int.isReversible() = getDigits().last() != "0"
 fun Int.isPalindrome() = isReversible() && reversed() == this
+fun Int.firstDigit() = getDigits().first().toInt()
 
-fun Int.nthDigit(digit: Int, vararg possibilities: Int): Boolean {
+fun Int.nthDigitOneOf(digit: Int, vararg possibilities: Int): Boolean {
     return possibilities.any {
         getDigits()[digit].toInt() == it
     }

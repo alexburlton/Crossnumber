@@ -2,11 +2,31 @@ import kotlin.math.abs
 import kotlin.math.sqrt
 
 fun main() {
-    println(Crossnumber10.A1())
+    println(Crossnumber10.AD22())
 }
 
 object Crossnumber10
 {
+    fun AD22() {
+        val a22s = getAllPossibilities("X9X").filter { (it - 6).isPalindrome() }
+
+        a22s.forEach { a22 ->
+            val d22s = getAllPossibilities("XXX").filter { it.firstDigit() == a22.firstDigit() }
+                .filter { it.nthDigitOneOf(1, 2, 4)}
+                .filter { !it.isPrime() }
+                .filter { it.primeFactorise().distinct().size == 1 }
+
+            println("22A: $a22, 22D: $d22s")
+        }
+    }
+
+    fun D27() {
+        val possibles = getAllPossibilities("X1XX8").filter { it.nthDigitOneOf(3, 7, 8) }
+
+        println("13: ${possibles.filter { it % 13 == 0 }}")
+        println("23: ${possibles.filter { it % 23 == 0 }}")
+    }
+
     fun A34() {
         val a34s = getAllPossibilities("1X")
         val a21s = getAllPossibilities("XX").filter { it.endsWith(0, 1, 2) }
@@ -26,7 +46,7 @@ object Crossnumber10
     }
 
     fun A12() {
-        val a15Possibilities = getAllPossibilities("XXX").filter { it.nthDigit(0, 5, 4) }
+        val a15Possibilities = getAllPossibilities("XXX").filter { it.nthDigitOneOf(0, 5, 4) }
             .filter { it.digitSum() == 7 }
             .filter { it.isReversible() }
             .filter { abs(it - it.reversed()) == 198 }
@@ -36,14 +56,14 @@ object Crossnumber10
 
 
     fun D9D2D1() {
-        val d9Possibilities = getAllPossibilities("XXXX").filter { it.isPalindrome() && it.nthDigit(2, 4, 5, 6, 7) }
+        val d9Possibilities = getAllPossibilities("XXXX").filter { it.isPalindrome() && it.nthDigitOneOf(2, 4, 5, 6, 7) }
 
         d9Possibilities.forEach { d9 ->
             val d1Possibilities = getAllPossibilities("1X1XXX").filter { it % d9 == 0 }
             d1Possibilities.forEach { d1 ->
-                val d2Possibilities = getAllPossibilities("XX9XX9").filter { it.nthDigit(0, 4, 8, 9) }
+                val d2Possibilities = getAllPossibilities("XX9XX9").filter { it.nthDigitOneOf(0, 4, 8, 9) }
                     .filter { it % d1 == 0 }
-                    .filter { it.nthDigit(3, 6, 7, 8, 9) }
+                    .filter { it.nthDigitOneOf(3, 6, 7, 8, 9) }
                     .filter { it.getDigits()[3].toInt() > d9.getDigits()[2].toInt() }
 
                 d2Possibilities.forEach { d2 ->
@@ -90,6 +110,7 @@ object Crossnumber10
 
     fun A49() = getAllPossibilities("X5X").filter { it.isReversible() && it.isDecreasing() }
         .filter { abs(it - it.reversed()) == 594 }
+        .filter { it.endsWith(1, 2)}
 
     fun lcmHcfThing() {
         val possibilities = getAllPossibilities("XX")
@@ -104,7 +125,8 @@ object Crossnumber10
                     && lcm != x
                     && lcm != y
                     && gcd != x
-                    && gcd != y)
+                    && gcd != y
+                    && (x.endsWith(9) || y.endsWith(9) || lcm.endsWith(x.firstDigit()) || lcm.endsWith(y.firstDigit())))
                 {
                     println("$x, $y: GCD $gcd, LCM $lcm")
                 }
