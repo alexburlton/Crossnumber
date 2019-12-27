@@ -2,7 +2,7 @@ import kotlin.math.abs
 import kotlin.math.sqrt
 
 fun main() {
-    Crossnumber10.A48()
+    println(Crossnumber10.D6())
 }
 
 object Crossnumber10
@@ -21,17 +21,23 @@ object Crossnumber10
     }
 
     fun A37(): List<Int> {
-        val ret = mutableListOf<Int>()
+        val ret = mutableSetOf<Int>()
         val a49Possibles = A49()
+
+        val newA49Possibilities = mutableSetOf<Int>()
 
         a49Possibles.forEach {
             val reversed = it.reversed()
 
             val difference = abs(it - reversed)
-            if (difference.digitCount() == 3) {
+            if (difference.digitCount() == 3
+                && difference.endsWith(4, 5)) {
                 ret.add(difference)
+                newA49Possibilities.add(it)
             }
         }
+
+        println("A49: $newA49Possibilities")
 
         return ret.filter { it.isReversible() }.toList()
     }

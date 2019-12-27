@@ -7,6 +7,12 @@ fun Int.digitCount() = getDigits().size
 fun Int.reversed() = toString().reversed().toInt()
 fun Int.isReversible() = getDigits().last() != "0"
 
+fun Int.endsWith(vararg endings: Int): Boolean {
+    return endings.any {
+        getDigits().last().toInt() == it
+    }
+}
+
 fun Int.isDecreasing(): Boolean {
     val digits = getDigits()
     return digits.mapIndexed { ix, digit -> ix == 0 || digits[ix - 1].toInt() > digit.toInt() }.all { it }
