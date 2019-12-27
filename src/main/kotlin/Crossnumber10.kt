@@ -112,6 +112,12 @@ object Crossnumber10
         .filter { abs(it - it.reversed()) == 594 }
         .filter { it.endsWith(1, 2)}
 
+    /**
+     * Down to:
+     *
+     * 24, 36: GCD 12, LCM 72
+     * 28, 42: GCD 14, LCM 84
+     */
     fun lcmHcfThing() {
         val possibilities = getAllPossibilities("XX")
 
