@@ -2,11 +2,57 @@ import kotlin.math.abs
 import kotlin.math.sqrt
 
 fun main() {
-    println(Crossnumber10.D6())
+    println(Crossnumber10.A1())
 }
 
 object Crossnumber10
 {
+    fun A34() {
+        val a34s = getAllPossibilities("1X")
+        val a21s = getAllPossibilities("XX").filter { it.endsWith(0, 1, 2) }
+        val a26s = getAllPossibilities("XX").filter { it.endsWith(0, 1, 2) }
+
+        a34s.forEach { a34 ->
+            a21s.forEach { a21 ->
+                a26s.forEach { a26 ->
+                    if (gcd(a26, a34) == a21
+                        && gcd(a21, a34) == a26
+                        && gcd(a21, a26) == a34) {
+                            println("$a21, $a26, $a34")
+                    }
+                }
+            }
+        }
+    }
+
+    fun A12() {
+        val a15Possibilities = getAllPossibilities("XXX").filter { it.nthDigit(0, 5, 4) }
+            .filter { it.digitSum() == 7 }
+            .filter { it.isReversible() }
+            .filter { abs(it - it.reversed()) == 198 }
+
+        println(a15Possibilities)
+    }
+
+
+    fun D9D2D1() {
+        val d9Possibilities = getAllPossibilities("XXXX").filter { it.isPalindrome() && it.nthDigit(2, 4, 5, 6, 7) }
+
+        d9Possibilities.forEach { d9 ->
+            val d1Possibilities = getAllPossibilities("1X1XXX").filter { it % d9 == 0 }
+            d1Possibilities.forEach { d1 ->
+                val d2Possibilities = getAllPossibilities("XX9XX9").filter { it.nthDigit(0, 4, 8, 9) }
+                    .filter { it % d1 == 0 }
+                    .filter { it.nthDigit(3, 6, 7, 8, 9) }
+                    .filter { it.getDigits()[3].toInt() > d9.getDigits()[2].toInt() }
+
+                d2Possibilities.forEach { d2 ->
+                    println("9D: $d9, 1D: $d1, 2D: $d2")
+                }
+            }
+        }
+    }
+
     fun A48() {
         val possibleParts = A37()
 
@@ -43,6 +89,7 @@ object Crossnumber10
     }
 
     fun A49() = getAllPossibilities("X5X").filter { it.isReversible() && it.isDecreasing() }
+        .filter { abs(it - it.reversed()) == 594 }
 
     fun lcmHcfThing() {
         val possibilities = getAllPossibilities("XX")
