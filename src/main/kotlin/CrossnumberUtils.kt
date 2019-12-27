@@ -4,6 +4,18 @@ import kotlin.math.sqrt
 
 fun Int.getDigits() = toString().toCharArray().map { it.toString() }
 fun Int.digitCount() = getDigits().size
+fun Int.reversed() = toString().reversed().toInt()
+fun Int.isReversible() = getDigits().last() != "0"
+
+fun Int.isDecreasing(): Boolean {
+    val digits = getDigits()
+    return digits.mapIndexed { ix, digit -> ix == 0 || digits[ix - 1].toInt() > digit.toInt() }.all { it }
+}
+fun Int.isIncreasing(): Boolean {
+    val digits = getDigits()
+    return digits.mapIndexed { ix, digit -> ix == 0 || digits[ix - 1].toInt() < digit.toInt() }.all { it }
+}
+fun Int.isMonotonic() = isDecreasing() || isIncreasing()
 
 fun Int.isAnagram(other: Int) = getDigits().sorted() == other.getDigits().sorted()
 
@@ -56,14 +68,8 @@ fun lcm(x: Int, y: Int): Int
 
     val allPrimesPresent = xFactors.union(yFactors)
 
-    var lcm = 1
-    allPrimesPresent.forEach { prime ->
-        val maxCount = maxOf(xFactors.count { it == prime }, yFactors.count { it == prime })
-
-        lcm *= prime.pow(maxCount)
-    }
-
-    return lcm
+    return allPrimesPresent.map { prime -> prime.pow(maxOf(xFactors.count { it == prime }, yFactors.count { it == prime })) }
+                            .reduce(Int::times)
 }
 
 fun Int.isSquare(): Boolean

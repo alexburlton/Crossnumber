@@ -1,11 +1,43 @@
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 fun main() {
-    Crossnumber10.lcmHcfThing()
+    Crossnumber10.A48()
 }
 
 object Crossnumber10
 {
+    fun A48() {
+        val possibleParts = A37()
+
+        possibleParts.forEach {
+            val reversed = it.reversed()
+
+            val sum = it + reversed
+            if (sum.digitCount() == 4) {
+                println("$it + $reversed = $sum")
+            }
+        }
+    }
+
+    fun A37(): List<Int> {
+        val ret = mutableListOf<Int>()
+        val a49Possibles = A49()
+
+        a49Possibles.forEach {
+            val reversed = it.reversed()
+
+            val difference = abs(it - reversed)
+            if (difference.digitCount() == 3) {
+                ret.add(difference)
+            }
+        }
+
+        return ret.filter { it.isReversible() }.toList()
+    }
+
+    fun A49() = getAllPossibilities("X5X").filter { it.isReversible() && it.isDecreasing() }
+
     fun lcmHcfThing() {
         val possibilities = getAllPossibilities("XX")
 
