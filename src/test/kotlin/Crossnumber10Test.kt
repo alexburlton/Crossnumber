@@ -39,7 +39,7 @@ private const val a51 = 49
 private const val a52 = 222222222
 private const val a53 = 10890
 
-private val acrossClues = listOf(a1, a3, a10, a11, a12, a13, a14, a15, a18, a21, a22, a23, a24, a25, a26, a27, a32, a33, a34,
+private val acrossClues: List<Number> = listOf(a1, a3, a10, a11, a12, a13, a14, a15, a18, a21, a22, a23, a24, a25, a26, a27, a32, a33, a34,
     a35, a37, a40, a41, a43, a45, a47, a48, a49, a51, a52, a53)
 
 private const val d1 = 111100
@@ -339,6 +339,7 @@ class Crossnumber10Test
     fun `Number of across clues`()
     {
         acrossClues.size shouldBe 31
+        println(acrossClues.sumByDouble { it.toDouble() }.toLong() )
     }
 
 
