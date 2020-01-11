@@ -2,26 +2,45 @@ import kotlin.math.abs
 import kotlin.math.sqrt
 
 fun main() {
-    println(Crossnumber10.AD22())
+    println(Crossnumber10.D46())
 }
 
 object Crossnumber10
 {
+    fun D46(): List<Int> {
+        val possibles = getAllPossibilities("X5")
+
+        val a14possibles = listOf(9754320, 9754310)
+
+        val ret = possibles.filter { d46 -> a14possibles.any { it % d46 == 0 } }
+        return ret
+    }
+
+    fun D29() = getAllPossibilities("X235").filter { (it - 8).isPalindrome() }.filter { it.nthDigitOneOf(0, 9, 7)}
+
+    fun D30() = getAllPossibilities("10XX2442").filter { it % 7 == 0 }
+        .filter { it.nthDigitOneOf(2, 0, 4) }
+        .filter { it.nthDigitOneOf(3, 5, 7) }
+
+    fun D36() = getAllPossibilities("X9X992").filter { it % 9 == 0 }.filter { it.nthDigitOneOf(0, 1, 2) }
+
     fun AD22() {
-        val a22s = getAllPossibilities("X9X").filter { (it - 6).isPalindrome() }
+        val a22s = getAllPossibilities("X0X").filter { (it - 6).isPalindrome() }
 
         a22s.forEach { a22 ->
-            val d22s = getAllPossibilities("XXX").filter { it.firstDigit() == a22.firstDigit() }
-                .filter { it.nthDigitOneOf(1, 2, 4)}
+            val d22s = getAllPossibilities("X21").filter { it.firstDigit() == a22.firstDigit() }
                 .filter { !it.isPrime() }
                 .filter { it.primeFactorise().distinct().size == 1 }
 
-            println("22A: $a22, 22D: $d22s")
+            if (d22s.isNotEmpty()) {
+                println("22A: $a22, 22D: $d22s")
+            }
         }
     }
 
     fun D27() {
-        val possibles = getAllPossibilities("X1XX8").filter { it.nthDigitOneOf(3, 7, 8) }
+        val possibles = getAllPossibilities("X1X88")
+            .filter { it.nthDigitOneOf(2, 3, 7)}
 
         println("13: ${possibles.filter { it % 13 == 0 }}")
         println("23: ${possibles.filter { it % 23 == 0 }}")
@@ -61,7 +80,7 @@ object Crossnumber10
         d9Possibilities.forEach { d9 ->
             val d1Possibilities = getAllPossibilities("1X1XXX").filter { it % d9 == 0 }
             d1Possibilities.forEach { d1 ->
-                val d2Possibilities = getAllPossibilities("XX9XX9").filter { it.nthDigitOneOf(0, 4, 8, 9) }
+                val d2Possibilities = getAllPossibilities("9X99X0")
                     .filter { it % d1 == 0 }
                     .filter { it.nthDigitOneOf(3, 6, 7, 8, 9) }
                     .filter { it.getDigits()[3].toInt() > d9.getDigits()[2].toInt() }
