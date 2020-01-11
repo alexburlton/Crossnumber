@@ -2,10 +2,10 @@ import kotlin.math.abs
 import kotlin.math.sqrt
 
 fun main() {
-    println(Crossnumber10.D46())
+    println(Crossnumber10Workings.D46())
 }
 
-object Crossnumber10
+object Crossnumber10Workings
 {
     fun D46(): List<Int> {
         val possibles = getAllPossibilities("X5")
@@ -18,9 +18,8 @@ object Crossnumber10
 
     fun D29() = getAllPossibilities("X235").filter { (it - 8).isPalindrome() }.filter { it.nthDigitOneOf(0, 9, 7)}
 
-    fun D30() = getAllPossibilities("10XX2442").filter { it % 7 == 0 }
+    fun D30() = getAllPossibilities("10XX2542").filter { it % 7 == 0 }
         .filter { it.nthDigitOneOf(2, 0, 4) }
-        .filter { it.nthDigitOneOf(3, 5, 7) }
 
     fun D36() = getAllPossibilities("X9X992").filter { it % 9 == 0 }.filter { it.nthDigitOneOf(0, 1, 2) }
 

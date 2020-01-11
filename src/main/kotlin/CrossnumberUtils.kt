@@ -2,13 +2,14 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-fun Int.getDigits() = toString().toCharArray().map { it.toString() }
-fun Int.digitCount() = getDigits().size
+fun Number.getDigits() = toString().toCharArray().map { it.toString() }
+fun Number.digitCount() = getDigits().size
 fun Int.digitSum() = getDigits().map { it.toInt() }.sum()
 fun Int.reversed() = toString().reversed().toInt()
 fun Int.isReversible() = getDigits().last() != "0"
 fun Int.isPalindrome() = isReversible() && reversed() == this
 fun Int.firstDigit() = getDigits().first().toInt()
+fun Int.lastDigit() = getDigits().last().toInt()
 
 fun Int.nthDigitOneOf(digit: Int, vararg possibilities: Int): Boolean {
     return possibilities.any {
